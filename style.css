@@ -23,13 +23,15 @@ div {
   display: grid;
   align-items: center;
   justify-content: center;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
 }
 
 button {
-  background-color: gray;
+  background-color: rgb(27, 27, 27);
   border: none;
+  color: white;
+  ;
   padding: 20px;
   font-size: 20px;
   border-radius: 10px;
@@ -37,7 +39,12 @@ button {
 }
 
 button:hover {
-  background-color: red;
+  background-color: rgb(48, 48, 48);
+}
+
+div.active,
+#button1.active {
+  background-color: rgb(0, 96, 0) !important;
 }
 
 .text {
@@ -49,7 +56,7 @@ button:hover {
 }
 
 .text div {
-  background-color: rgb(90, 90, 90);
+  background-color: rgb(48, 48, 48);
   padding: 10px 20px;
   border-radius: 10px;
 }

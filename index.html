@@ -2,6 +2,7 @@
   <head>
     <title>Pomodoro</title>
     <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
   </head>
   <body>
     <div class="text">
@@ -9,11 +10,11 @@
       <div id="descansos">0 descansos</div>
       <div id="descansosLargos">0 descansos largos</div>
     </div>
-    <div id="evento">evento</div>
     <div id="clock" class="clock">00:00</div>
     <div class="buttons">
-      <button onclick="Start()">Iniciar</button>
-      <button onclick="Stop()">Cancelar</button>
+      <button id="button1" onclick="StartButton()">Iniciar</button>
+      <button id="button2" onclick="Stop()">Detener</button>
+      <button id="button2" onclick="Reset()">Limpiar</button>
     </div>
   </body>
   <script src="script.js"></script>
