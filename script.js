@@ -1,14 +1,14 @@
 var sec = 0;
 var min = 0;
 var timer = null;
-var pomodoros = 0;
+var focos = 0;
 var descansos = 0;
 var descansosLargos = 0;
-var esPomodoro = false;
+var esFoco = false;
 var esDescanso = false;
 var esDescansoLargo = false;
 var contDescansos = 0;
-var contPomodoros = 0;
+var contFocos = 0;
 var clock = null;
 
 function Start() {
@@ -21,9 +21,9 @@ function Start() {
 }
 
 function End() {
-  if (esPomodoro === true) {
-    pomodoros++;
-    contPomodoros++;
+  if (esFoco === true) {
+    focos++;
+    contFocos++;
   } else if (esDescanso === true) {
     descansos++;
     contDescansos++;
@@ -34,32 +34,32 @@ function End() {
   sec = 0;
   if (esDescansoLargo) {
     min = 25;
-    esPomodoro = true;
+    esFoco = true;
     esDescanso = false;
     esDescansoLargo = false;
-    document.getElementById('evento').innerHTML = 'Pomodoro';
-  } else if (contDescansos == 2 && contPomodoros == 3) {
+    document.getElementById('evento').innerHTML = 'Foco';
+  } else if (contDescansos == 2 && contFocos == 3) {
     contDescansos = 0;
-    contPomodoros = 0;
+    contFocos = 0;
     min = 15;
-    esPomodoro = false;
+    esFoco = false;
     esDescanso = false;
     esDescansoLargo = true;
     document.getElementById('evento').innerHTML = 'Descanso largo';
-  } else if (esPomodoro) {
+  } else if (esFoco) {
     min = 5;
-    esPomodoro = false;
+    esFoco = false;
     esDescanso = true;
     esDescansoLargo = false;
     document.getElementById('evento').innerHTML = 'Descanso';
   } else {
     min = 25;
-    esPomodoro = true;
+    esFoco = true;
     esDescanso = false;
     esDescansoLargo = false;
-    document.getElementById('evento').innerHTML = 'Pomodoro';
+    document.getElementById('evento').innerHTML = 'Foco';
   }
-  document.getElementById('pomodoros').innerHTML = pomodoros + ' pomodoros';
+  document.getElementById('focos').innerHTML = focos + ' focos';
   document.getElementById('descansos').innerHTML = descansos + ' descansos';
   document.getElementById('descansosLargos').innerHTML = descansosLargos + ' descansos largos';
 }
