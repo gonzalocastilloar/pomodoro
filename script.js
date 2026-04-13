@@ -92,6 +92,7 @@ function End() {
     esDescanso = false;
     esDescansoLargo = false;
     document.getElementById('focos').classList.add('active');
+    ShowNotification('Pomodoro', 'Es hora de volver al trabajo.');
   } else if (contDescansos == 2 && contFocos == 3) {
     contDescansos = 0;
     contFocos = 0;
@@ -100,18 +101,21 @@ function End() {
     esDescanso = false;
     esDescansoLargo = true;
     document.getElementById('descansosLargos').classList.add('active');
+    ShowNotification('Pomodoro', '¡A descansar! tomate unos 15 minutos.');
   } else if (esFoco) {
     min = 5;
     esFoco = false;
     esDescanso = true;
     esDescansoLargo = false;
     document.getElementById('descansos').classList.add('active');
+    ShowNotification('Pomodoro', 'Tomate una pausa.');
   } else {
     min = 25;
     esFoco = true;
     esDescanso = false;
     esDescansoLargo = false;
     document.getElementById('focos').classList.add('active');
+    ShowNotification('Pomodoro', 'Es hora de volver al trabajo.');
   }
   document.getElementById('focos').innerHTML = focos + ' focos';
   document.getElementById('descansos').innerHTML = descansos + ' descansos';
@@ -193,4 +197,22 @@ window.addEventListener('DOMContentLoaded', () => {
     contFocos = data.contFocos;
   }
   ShowClock();
+
+  // ACTIVACION DE NOTIFICACION
+  Notification.requestPermission().then(permiso => {
+    if (permiso === "granted") {
+      console.log("¡Permiso concedido!");
+    }
+  });
 })
+
+function ShowNotification(_title, _text) {
+  const opciones = {
+    body: _text,
+    icon: "https://yumserver.com/pomodoro/icon.png", // Icono pequeño
+    image: "https://yumserver.com/pomodoro/icon.png", // Imagen principal
+    badge: "https://yumserver.com/pomodoro/icon.png" // Icono de barra de estado (Android)
+  };
+
+  new Notification(_title, opciones);
+}
