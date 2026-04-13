@@ -157,6 +157,9 @@ function Save() {
 
 function Reset() {
   if (confirm("¿Seguro desea eliminar todos los registros?")) {
+    button1Dom.innerHTML = 'Iniciar';
+    isFirstRun = true;
+    isRunning = false;
     sec = 0;
     min = 0;
     focos = 0;
