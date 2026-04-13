@@ -1,0 +1,18 @@
+{
+  "name": "Pomodoro",
+  "short_name": "Pomodoro",
+  "description": "Cronómetro y contador Pomodoro",
+  "author": "Gonzalo Castillo",
+  "start_url": "/pomodoro",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/pomodoro/icon.png",
+      "sizes": "100x99",
+      "type": "image/png"
+    }
+  ]
+}
