@@ -219,20 +219,31 @@ window.addEventListener('DOMContentLoaded', () => {
   ShowClock();
 
   // ACTIVACION DE NOTIFICACION
-  Notification.requestPermission().then(permiso => {
-    if (permiso === "granted") {
-      console.log("¡Permiso concedido!");
-    }
-  });
+  InitNotify();
 })
 
-function ShowNotification(_title, _text) {
-  const opciones = {
-    body: _text,
-    icon: "https://yumserver.com/pomodoro/icon.png", // Icono pequeño
-    image: "https://yumserver.com/pomodoro/icon.png", // Imagen principal
-    badge: "https://yumserver.com/pomodoro/icon.png" // Icono de barra de estado (Android)
-  };
+function InitNotify() {
+  if (!("Notification" in window)) {
+    console.log("Este navegador no soporta notificaciones.");
+    return;
+  }
 
-  new Notification(_title, opciones);
+  if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+    Notification.requestPermission();
+  }
+}
+
+function ShowNotification(_title, _text) {
+  if (Notification.permission === "granted") {
+    const notification = new Notification(_title, {
+      body: _text,
+      icon: "/img/icon.png", // Asegúrate de que esta ruta sea válida
+      tag: "pomodoro-notif"  // Evita que se acumulen múltiples notificaciones
+    });
+
+    // Opcional: Hacer que la notificación se cierre sola tras 5 segundos
+    setTimeout(() => notification.close(), 5000);
+  } else {
+    console.log("Permiso de notificación no concedido.");
+  }
 }
