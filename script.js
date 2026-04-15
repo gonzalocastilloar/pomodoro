@@ -237,7 +237,7 @@ function ShowNotification(_title, _text) {
   if (Notification.permission === "granted") {
     const notification = new Notification(_title, {
       body: _text,
-      icon: "/img/icon.png", // Asegúrate de que esta ruta sea válida
+      icon: "https://yumserver.com/pomodoro/icon.png", // Asegúrate de que esta ruta sea válida
       tag: "pomodoro-notif"  // Evita que se acumulen múltiples notificaciones
     });
 
