@@ -50,6 +50,7 @@ function Start() {
 function ShowClock() {
   clockDom.innerHTML =
     `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`
+  document.title = `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
 }
 
 function Next() {
