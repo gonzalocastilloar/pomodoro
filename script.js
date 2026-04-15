@@ -43,6 +43,8 @@ function Start() {
   }
   timer = setInterval(Timer, 1000);
   document.getElementById('button2').classList.remove('locked');
+  // ACTIVACION DE NOTIFICACION
+  InitNotify();
 }
 
 function ShowClock() {
@@ -125,7 +127,7 @@ function StartDescanso() {
   esDescanso = true;
   esDescansoLargo = false;
   document.getElementById('descansos').classList.add('active');
-  ShowNotification('Pomodoro', 'Tomate una pausa.');
+  ShowNotification('Pomodoro', 'Tomate una pausa de 5 minutos.');
 }
 
 function StartDescansoLargo() {
@@ -218,8 +220,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   ShowClock();
 
-  // ACTIVACION DE NOTIFICACION
-  InitNotify();
 })
 
 function InitNotify() {
