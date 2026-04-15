@@ -21,16 +21,16 @@ function StartButton() {
   if (isRunning) {
     clearInterval(timer);
     ShowClock();
-    button1Dom.innerHTML = 'Iniciar';
+    button1Dom.innerHTML = 'Continuar';
     isRunning = false;
   } else {
     isRunning = true;
     button1Dom.innerHTML = 'Pausar';
     if (isFirstRun) {
-      sec = 59;
-      min = 24;
+      StartFoco();
       isFirstRun = false;
     }
+
     Start();
   }
   button1Dom.classList.toggle('active');
@@ -42,13 +42,18 @@ function Start() {
     clearInterval(timer);
   }
   timer = setInterval(Timer, 1000);
-  End();
-  ShowClock();
+  document.getElementById('button2').classList.remove('locked');
 }
 
 function ShowClock() {
   clockDom.innerHTML =
     `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`
+}
+
+function Next() {
+  End();
+  ShowClock();
+  ShowCounters();
 }
 
 function Stop() {
@@ -57,10 +62,10 @@ function Stop() {
   button1Dom.innerHTML = 'Iniciar';
   button1Dom.classList.remove('active');
   button2Dom.classList.remove('active');
-  sec = 0;
-  min = 0;
+  // sec = 0; min = 0;
   ShowClock();
   RestartDoms();
+  document.getElementById('button2').classList.add('locked');
 }
 
 function RestartDoms() {
@@ -87,40 +92,51 @@ function End() {
 
   sec = 0;
   if (esDescansoLargo) {
-    min = 25;
-    esFoco = true;
-    esDescanso = false;
-    esDescansoLargo = false;
-    document.getElementById('focos').classList.add('active');
-    ShowNotification('Pomodoro', 'Es hora de volver al trabajo.');
+    StartFoco();
   } else if (contDescansos == 2 && contFocos == 3) {
-    contDescansos = 0;
-    contFocos = 0;
-    min = 15;
-    esFoco = false;
-    esDescanso = false;
-    esDescansoLargo = true;
-    document.getElementById('descansosLargos').classList.add('active');
-    ShowNotification('Pomodoro', '¡A descansar! tomate unos 15 minutos.');
+    StartDescansoLargo();
   } else if (esFoco) {
-    min = 5;
-    esFoco = false;
-    esDescanso = true;
-    esDescansoLargo = false;
-    document.getElementById('descansos').classList.add('active');
-    ShowNotification('Pomodoro', 'Tomate una pausa.');
+    StartDescanso();
   } else {
-    min = 25;
-    esFoco = true;
-    esDescanso = false;
-    esDescansoLargo = false;
-    document.getElementById('focos').classList.add('active');
-    ShowNotification('Pomodoro', 'Es hora de volver al trabajo.');
+    StartFoco();
   }
+  ShowCounters();
+  Save();
+}
+
+function ShowCounters() {
   document.getElementById('focos').innerHTML = focos + ' focos';
   document.getElementById('descansos').innerHTML = descansos + ' descansos';
   document.getElementById('descansosLargos').innerHTML = descansosLargos + ' descansos largos';
-  Save();
+}
+
+function StartFoco() {
+  min = 25;
+  esFoco = true;
+  esDescanso = false;
+  esDescansoLargo = false;
+  document.getElementById('focos').classList.add('active');
+  ShowNotification('Pomodoro', 'Es hora de volver al trabajo.');
+}
+
+function StartDescanso() {
+  min = 5;
+  esFoco = false;
+  esDescanso = true;
+  esDescansoLargo = false;
+  document.getElementById('descansos').classList.add('active');
+  ShowNotification('Pomodoro', 'Tomate una pausa.');
+}
+
+function StartDescansoLargo() {
+  contDescansos = 0;
+  contFocos = 0;
+  min = 15;
+  esFoco = false;
+  esDescanso = false;
+  esDescansoLargo = true;
+  document.getElementById('descansosLargos').classList.add('active');
+  ShowNotification('Pomodoro', '¡A descansar! tomate unos 15 minutos.');
 }
 
 function Timer() {
@@ -132,7 +148,7 @@ function Timer() {
   }
 
   if (min == 0 && sec == 0) {
-    Start();
+    End();
   }
 
   ShowClock();
@@ -171,6 +187,7 @@ function Reset() {
     contDescansos = 0;
     contFocos = 0;
     ShowClock();
+    ShowCounters();
     Save();
     RestartDoms();
     clearInterval(timer);
