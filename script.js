@@ -220,6 +220,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   ShowClock();
 
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('Service Worker registrado', reg))
+      .catch(err => console.error('Error al registrar', err));
+  }
 })
 
 function InitNotify() {
@@ -234,6 +239,7 @@ function InitNotify() {
 }
 
 function ShowNotification(_title, _text) {
+  return avisarFin(_title, _text);
   if (Notification.permission === "granted") {
     const notification = new Notification(_title, {
       body: _text,
@@ -245,5 +251,19 @@ function ShowNotification(_title, _text) {
     setTimeout(() => notification.close(), 5000);
   } else {
     console.log("Permiso de notificación no concedido.");
+  }
+}
+
+// Función para llamar cuando el tiempo termine
+function avisarFin(_title, _text) {
+  if (Notification.permission === 'granted') {
+    navigator.serviceWorker.ready.then(registration => {
+      registration.showNotification(_title, {
+        body: _text,
+        icon: "https://yumserver.com/pomodoro/icon.png", // Asegúrate de que esta ruta sea válida
+        vibrate: [200, 100, 200], // Solo en Android
+        tag: 'pomodoro-alerta'
+      });
+    });
   }
 }
